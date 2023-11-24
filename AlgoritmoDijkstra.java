@@ -57,7 +57,7 @@ class Pair {
     }
 }
 
-class dijkstra {
+class Dijkstra {
     public int[] dijkstraAlgorithm(Graph graph, int startVertex, int[] parents) {
         int[] distances = new int[graph.getNumVertices()];
         for (int i = 0; i < graph.getNumVertices(); i++) {
@@ -109,7 +109,7 @@ public class AlgoritmoDijkstra {
 
                 scanner.close();     
 
-                dijkstra dijkstra = new dijkstra();
+                Dijkstra dijkstra = new Dijkstra();
                 // System.out.print("Por qual vertice deseja comecar: ");
                 // Scanner sc = new Scanner(System.in);
                 // int iniciarVertice = sc.nextInt();
