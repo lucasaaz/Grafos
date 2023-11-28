@@ -3918,3 +3918,5 @@ Para o vértice 3121: Distância - 2, Caminho - 0 -> 24 -> 3121
 Para o vértice 3122: Distância - 2, Caminho - 0 -> 15 -> 3122
 Para o vértice 3123: Distância - 2, Caminho - 0 -> 24 -> 3123
 Para o vértice 3124: Distância - 2, Caminho - 0 -> 15 -> 3124
+
+Tempo total de execução: 241865 ms | 241 s | 4 min
