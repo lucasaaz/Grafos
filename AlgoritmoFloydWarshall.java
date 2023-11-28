@@ -43,14 +43,15 @@ public class AlgoritmoFloydWarshall {
             e.printStackTrace();
         }
 
-        // Escrever o resultado no arquivo "FloydWarshall.txt"
-        criarArquivoTexto("FloydWarshall.txt", resultado.toString());
-
+        // Calcular o tempo gasto
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
         resultado.append("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
         System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        
+        // Escrever o resultado no arquivo "ForestPaths.txt"
+        criarArquivoTexto("FloydWarshall.txt", resultado.toString());
     }
 
     public static void criarArquivoTexto(String nomeArquivo, String conteudo) {
