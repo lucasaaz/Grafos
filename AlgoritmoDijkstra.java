@@ -143,14 +143,15 @@ public class AlgoritmoDijkstra {
             e.printStackTrace();
         }
 
-        // Escrever o resultado no arquivo "Dijkstra.txt"
-        criarArquivoTexto("Dijkstra.txt", resultado.toString());
-                
+        // Calcular o tempo gasto
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
-        System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime/1000) + " s | " + ((totalTime/1000)/60) + " min\n");
-    
+        resultado.append("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        
+        // Escrever o resultado no arquivo "ForestPaths.txt"
+        criarArquivoTexto("Dijkstra.txt", resultado.toString());
     }
 
     public static void criarArquivoTexto(String nomeArquivo, String conteudo) {
