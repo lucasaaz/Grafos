@@ -85,7 +85,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
         StringBuilder resultado = new StringBuilder();
 
         try {
-            for (int y = 1; y <= 2; y++) {  // Passar pelos 5 arquivos
+            for (int y = 1; y <= 5; y++) {  // Passar pelos 5 arquivos
                 Scanner scanner = new Scanner(new File("grafo_" + y + ".txt"));
                 int numVertices = scanner.nextInt();
                 Graph graph = new Graph(numVertices);

@@ -10,7 +10,7 @@ Para o vértice 4: Distância - 8, Caminho - 0 -> 4
 Grafo 2
 Distâncias mínimas e caminhos mínimos a partir do vértice 0:
 Para o vértice 0: Distância - 0, Caminho - 0
-Para o vértice 1: Distância - 4, Caminho - 0 -> 9 -> 6 -> 1
+Para o vértice 1: Distância - 4, Caminho - 0 -> 8 -> 21 -> 1
 Para o vértice 2: Distância - 4, Caminho - 0 -> 2
 Para o vértice 3: Distância - 4, Caminho - 0 -> 22 -> 3
 Para o vértice 4: Distância - 3, Caminho - 0 -> 8 -> 4
@@ -22,12 +22,12 @@ Para o vértice 9: Distância - 1, Caminho - 0 -> 9
 Para o vértice 10: Distância - 3, Caminho - 0 -> 22 -> 15 -> 10
 Para o vértice 11: Distância - 2, Caminho - 0 -> 22 -> 11
 Para o vértice 12: Distância - 2, Caminho - 0 -> 22 -> 12
-Para o vértice 13: Distância - 3, Caminho - 0 -> 9 -> 5 -> 13
+Para o vértice 13: Distância - 3, Caminho - 0 -> 23 -> 13
 Para o vértice 14: Distância - 4, Caminho - 0 -> 14
 Para o vértice 15: Distância - 2, Caminho - 0 -> 22 -> 15
 Para o vértice 16: Distância - 2, Caminho - 0 -> 8 -> 16
 Para o vértice 17: Distância - 3, Caminho - 0 -> 23 -> 17
-Para o vértice 18: Distância - 4, Caminho - 0 -> 9 -> 6 -> 18
+Para o vértice 18: Distância - 4, Caminho - 0 -> 8 -> 20 -> 18
 Para o vértice 19: Distância - 4, Caminho - 0 -> 19
 Para o vértice 20: Distância - 3, Caminho - 0 -> 8 -> 20
 Para o vértice 21: Distância - 2, Caminho - 0 -> 8 -> 21
@@ -80,7 +80,7 @@ Para o vértice 39: Distância - 2, Caminho - 0 -> 116 -> 39
 Para o vértice 40: Distância - 2, Caminho - 0 -> 105 -> 40
 Para o vértice 41: Distância - 2, Caminho - 0 -> 98 -> 41
 Para o vértice 42: Distância - 2, Caminho - 0 -> 25 -> 42
-Para o vértice 43: Distância - 3, Caminho - 0 -> 85 -> 22 -> 43
+Para o vértice 43: Distância - 3, Caminho - 0 -> 91 -> 43
 Para o vértice 44: Distância - 2, Caminho - 0 -> 106 -> 44
 Para o vértice 45: Distância - 2, Caminho - 0 -> 45
 Para o vértice 46: Distância - 2, Caminho - 0 -> 111 -> 46
@@ -111,7 +111,7 @@ Para o vértice 70: Distância - 3, Caminho - 0 -> 45 -> 70
 Para o vértice 71: Distância - 2, Caminho - 0 -> 111 -> 71
 Para o vértice 72: Distância - 1, Caminho - 0 -> 72
 Para o vértice 73: Distância - 2, Caminho - 0 -> 72 -> 73
-Para o vértice 74: Distância - 3, Caminho - 0 -> 25 -> 24 -> 74
+Para o vértice 74: Distância - 3, Caminho - 0 -> 102 -> 74
 Para o vértice 75: Distância - 2, Caminho - 0 -> 98 -> 75
 Para o vértice 76: Distância - 3, Caminho - 0 -> 45 -> 76
 Para o vértice 77: Distância - 2, Caminho - 0 -> 77
@@ -126,7 +126,7 @@ Para o vértice 85: Distância - 1, Caminho - 0 -> 85
 Para o vértice 86: Distância - 2, Caminho - 0 -> 50 -> 86
 Para o vértice 87: Distância - 2, Caminho - 0 -> 72 -> 87
 Para o vértice 88: Distância - 3, Caminho - 0 -> 6 -> 88
-Para o vértice 89: Distância - 3, Caminho - 0 -> 25 -> 24 -> 89
+Para o vértice 89: Distância - 3, Caminho - 0 -> 95 -> 103 -> 89
 Para o vértice 90: Distância - 2, Caminho - 0 -> 101 -> 90
 Para o vértice 91: Distância - 1, Caminho - 0 -> 91
 Para o vértice 92: Distância - 2, Caminho - 0 -> 102 -> 92
@@ -3919,4 +3919,4 @@ Para o vértice 3122: Distância - 2, Caminho - 0 -> 15 -> 3122
 Para o vértice 3123: Distância - 2, Caminho - 0 -> 24 -> 3123
 Para o vértice 3124: Distância - 2, Caminho - 0 -> 15 -> 3124
 
-Tempo total de execução: 59993 ms | 59 s | 0 min
+Tempo total de execução: 156862 ms | 156 s | 2 min
