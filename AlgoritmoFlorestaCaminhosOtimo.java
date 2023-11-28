@@ -85,7 +85,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
         StringBuilder resultado = new StringBuilder();
 
         try {
-            for (int y = 1; y <= 5; y++) {  // Passar pelos 5 arquivos
+            for (int y = 1; y <= 2; y++) {  // Passar pelos 5 arquivos
                 Scanner scanner = new Scanner(new File("grafo_" + y + ".txt"));
                 int numVertices = scanner.nextInt();
                 Graph graph = new Graph(numVertices);
@@ -134,14 +134,16 @@ public class AlgoritmoFlorestaCaminhosOtimo {
             e.printStackTrace();
         }
 
-        // Escrever o resultado no arquivo "ForestPaths.txt"
-        criarArquivoTexto("ForestPaths.txt", resultado.toString());
-
+        // Calcular o tempo gasto
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
         resultado.append("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
         System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        
+        // Escrever o resultado no arquivo "ForestPaths.txt"
+        criarArquivoTexto("ForestPaths.txt", resultado.toString());
+    
     }
 
     public static void criarArquivoTexto(String nomeArquivo, String conteudo) {

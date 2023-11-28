@@ -110,9 +110,6 @@ public class AlgoritmoDijkstra {
                 scanner.close();     
 
                 Dijkstra dijkstra = new Dijkstra();
-                // System.out.print("Por qual vertice deseja comecar: ");
-                // Scanner sc = new Scanner(System.in);
-                // int iniciarVertice = sc.nextInt();
                 int startVertex = 0;  // Você pode escolher outro vértice como ponto de origem
                 int[] parents = new int[numVertices];
                 for (int i = 0; i < numVertices; i++) {
