@@ -4,16 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.LinkedList;
-import java.util.Queue;
 
+// Classe que representa um grafo
 class Graph {
     private int numVertices;
     private List<List<Pair>> adjList;
 
+    // Construtor que inicializa o grafo com o número de vértices especificado
     public Graph(int vertices) {
         this.numVertices = vertices;
         this.adjList = new ArrayList<>(vertices);
@@ -22,17 +24,18 @@ class Graph {
         }
     }
 
+    // Método para adicionar uma aresta ao grafo
     public void addEdge(int source, int destination, int weight) {
-        // Garantir que a lista interna tenha o tamanho correto
+        // Certifica-se de que a lista tenha capacidade suficiente
         while (this.adjList.size() <= Math.max(source, destination)) {
             this.adjList.add(new ArrayList<>());
         }
 
         this.adjList.get(source).add(new Pair(destination, weight));
-        // A aresta inversa não é adicionada automaticamente para um grafo direcionado
         this.adjList.get(destination).add(new Pair(source, weight));
     }
 
+    // Métodos para obter a lista de adjacência e o número de vértices
     public List<List<Pair>> getAdjList() {
         return this.adjList;
     }
@@ -42,6 +45,7 @@ class Graph {
     }
 }
 
+// Classe que representa um par de vértice e peso
 class Pair {
     private int vertex;
     private int weight;
@@ -58,39 +62,126 @@ class Pair {
     public int getWeight() {
         return this.weight;
     }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 }
 
-// Classe principal que contém a implementação do algoritmo de Floresta de Caminhos Otimo
-public class AlgoritmoFlorestaCaminhosOtimo {
+public class AlgoritmoJohnson {
 
-    // Implementação do algoritmo de Floresta de Caminhos Otimo
-    public static int[] forestPathsAlgorithm(Graph graph, int startVertex, int[] parents) {
-        int[] distances = new int[graph.getNumVertices()];
-        for (int i = 0; i < graph.getNumVertices(); i++) {
+    // Algoritmo de Johnson
+    public static int[] johnson(Graph graph, int startVertex, int[] parents) {
+        int numVertices = graph.getNumVertices();
+
+        // Adição do nó fictício
+        graph.addEdge(numVertices, 0, 0);
+
+        // Execução do Bellman-Ford para encontrar os menores caminhos do nó fictício para todos os outros nós
+        int[] hValues = bellmanFord(graph, numVertices);
+
+        // Verificação de ciclo negativo
+        if (hValues == null) {
+            System.out.println("O grafo contém um ciclo negativo. O algoritmo de Johnson não pode ser aplicado.");
+            return null;
+        }
+
+        // Ajuste dos pesos das arestas originais
+        for (int u = 0; u < numVertices; u++) {
+            for (Pair neighbor : graph.getAdjList().get(u)) {
+                int v = neighbor.getVertex();
+                int weightUV = neighbor.getWeight();
+                neighbor.setWeight(weightUV + hValues[u] - hValues[v]);
+            }
+        }
+
+        // Remoção do nó fictício
+        graph.getAdjList().remove(numVertices);
+
+        // Inicialização do array de resultados
+        int[] result = new int[numVertices * numVertices];
+        int index = 0;
+        for (int i = 0; i < numVertices; i++) {
+            int[] distances = dijkstra(graph, i);
+            for (int j = 0; j < numVertices; j++) {
+                result[index++] = distances[j] - hValues[i] + hValues[j];
+            }
+        }
+
+        return result;
+    }
+
+    // Algoritmo de Bellman-Ford modificado
+    public static int[] bellmanFord(Graph graph, int startVertex) {
+        int numVertices = graph.getNumVertices();
+        int[] distances = new int[numVertices + 1];
+
+        // Inicialização das distâncias
+        for (int i = 0; i <= numVertices; i++) {
             distances[i] = Integer.MAX_VALUE;
         }
         distances[startVertex] = 0;
 
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(startVertex);
+        // Relaxamento das arestas repetidas numVertices vezes
+        for (int i = 0; i < numVertices; i++) {
+            for (int u = 0; u <= numVertices; u++) {
+                for (Pair neighbor : graph.getAdjList().get(u)) {
+                    int v = neighbor.getVertex();
+                    int weightUV = neighbor.getWeight();
 
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
+                    if (distances[u] != Integer.MAX_VALUE && distances[v] > distances[u] + weightUV) {
+                        distances[v] = distances[u] + weightUV;
+                    }
+                }
+            }
+        }
 
+        // Verificação de ciclo negativo
+        for (int u = 0; u <= numVertices; u++) {
             for (Pair neighbor : graph.getAdjList().get(u)) {
                 int v = neighbor.getVertex();
                 int weightUV = neighbor.getWeight();
-
-                if (distances[v] > distances[u] + weightUV) {
-                    distances[v] = distances[u] + weightUV;
-                    parents[v] = u;  // Atualiza o pai para o caminho mínimo
-                    queue.offer(v);
+                if (distances[u] != Integer.MAX_VALUE && distances[v] > distances[u] + weightUV) {
+                    return null;  // Ciclo negativo detectado
                 }
             }
         }
 
         return distances;
     }
+
+    // Algoritmo de Dijkstra modificado
+    public static int[] dijkstra(Graph graph, int startVertex) {
+        int numVertices = graph.getNumVertices();
+        int[] distances = new int[numVertices + 1]; // Ajuste aqui para numVertices + 1
+
+        // Inicialização das distâncias
+        for (int i = 0; i <= numVertices; i++) {
+            distances[i] = Integer.MAX_VALUE;
+        }
+        distances[startVertex] = 0;
+
+        PriorityQueue<Pair> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(Pair::getWeight));
+        priorityQueue.add(new Pair(startVertex, 0));
+
+        while (!priorityQueue.isEmpty()) {
+            int u = priorityQueue.poll().getVertex();
+
+            for (Pair neighbor : graph.getAdjList().get(u)) {
+                int v = neighbor.getVertex();
+                int weightUV = neighbor.getWeight();
+
+                if (v < numVertices && distances[v] > distances[u] + weightUV) {
+                    distances[v] = distances[u] + weightUV;
+                    priorityQueue.add(new Pair(v, distances[v]));
+                }
+            }
+        }
+
+        return distances;
+    }
+
+    
 
     // Método principal
     public static void main(String[] args) {
@@ -100,7 +191,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
         List<String> ResultAresta = new ArrayList<>();
 
         for (int y = 1; y <= 5; y++) { // Itera sobre os 5 grafos
-            
+
             // Início - Tempo de execução do grafo atual
             long startTimeFile = System.currentTimeMillis();
 
@@ -120,7 +211,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
             }
 
             try {
-                for (int repeat = 0; repeat < 5; repeat++) {  // Repetir a leitura do arquivo 5 vezes
+                for (int repeat = 0; repeat < 5; repeat++) { // Repetir a leitura do arquivo 5 vezes
 
                     // Inicio - Tempo de execucao do grafo atual por vertice
                     long startTimeGrafo = System.currentTimeMillis();
@@ -135,7 +226,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
                         parents[i] = -1;
                     }
 
-                    int[] distances = forestPathsAlgorithm(graph, startVertex, parents);
+                    int[] distances = johnson(graph, startVertex, parents);
 
                     // Exibindo as distâncias mínimas e os caminhos mínimos a partir do ponto de origem
                     resultado.append("\nGrafo ").append(y).append(" - Iteração ").append(repeat + 1).append(" - Arestas " + numLinhas);
@@ -156,6 +247,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
                         }
                         resultado.append("\n");
                     }
+                    //resultado.append("\n");
                     // Fim - Tempo de execucao do grafo atual por vertice
                     // Calcula o tempo gasto no processamento do grafo atual 
                     long endTimeGrafo = System.currentTimeMillis();
@@ -174,31 +266,33 @@ public class AlgoritmoFlorestaCaminhosOtimo {
             long totalTimeFile = endTimeFile - startTimeFile;
 
             // Registra o tempo gasto em cada grafo
-            resultado.append("\nTempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
-            System.out.println("\nTempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
+            resultado.append("Tempo total de execução do grafo_").append(y).append(": ").append(totalTimeFile).append(" ms | ").append((totalTimeFile / 1000)).append(" s | ").append(((totalTimeFile / 1000) / 60)).append(" min\n");
+            resultado.append("\n");
+            System.out.println("Tempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
         }
 
-        // Calcula o tempo total gasto no Arquivo Completo
+        // Calcular o tempo gasto
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
         // Registra o tempo total gasto
-        resultado.append("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
-        System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        resultado.append("Tempo total de execução: ").append(totalTime).append(" ms | ").append((totalTime / 1000)).append(" s | ").append(((totalTime / 1000) / 60)).append(" min\n");
+        System.out.println("Tempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
 
-        // Escrever o resultado no arquivo "ForestPaths.txt"
-        criarArquivoTexto("ForestPaths.txt", resultado.toString());
+        // Escrever o resultado no arquivo "Johnson.txt"
+        criarArquivoTexto("Johnson.txt", resultado.toString());
         List<List<String>> ResultFinal = new ArrayList<>();
         ResultFinal.add(ResulTime);
         ResultFinal.add(ResultAresta);
-        criarArquivoTexto("ResulTime_ForestPaths.txt", ResultFinal.toString());
+        criarArquivoTexto("ResulTime_Jhonson.txt", ResultFinal.toString());
     }
+
     // Função para ler o grafo de um arquivo
     public static Graph lerGrafo(String nomeArquivo, int numLinhas) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(nomeArquivo));
         int numVertices = scanner.nextInt();
         Graph graph = new Graph(numVertices);
-    
+
         int linhaAtual = 0;
         while (linhaAtual < numLinhas && scanner.hasNext()) {
             int source = scanner.nextInt();
@@ -207,7 +301,7 @@ public class AlgoritmoFlorestaCaminhosOtimo {
             graph.addEdge(source, destination, weight);
             linhaAtual++;
         }
-    
+
         scanner.close();
         return graph;
     }
