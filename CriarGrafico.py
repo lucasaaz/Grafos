@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import ast
 
 algoritmos = ["BellmanFord", "Dijkstra", "FloydWarshall", "ForestPaths", "Jhonson"]
@@ -33,6 +32,7 @@ for i in algoritmos:
     lista_vertice_3125.append(dados_arestas[20:25])
     lista_vertice_3125.append(dados_tempo[20:25])
 
+
 #
 # Gera um grafico de todos os algoritmos com as arestas aumentando e vertice = 5 
 #
@@ -46,7 +46,7 @@ plt.plot(lista_vertice_5[8],lista_vertice_5[9], marker='', linestyle='-', color=
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
-plt.title('RESULTADO POR ALGORITMO')
+plt.title('RESULTADO POR ALGORITMO COM GRAFOS DE 5 VÉRTICES')
 
 # Adicionar legenda
 plt.legend()
@@ -67,7 +67,7 @@ plt.plot(lista_vertice_25[8],lista_vertice_25[9], marker='', linestyle='-', colo
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
-plt.title('RESULTADO POR ALGORITMO')
+plt.title('RESULTADO POR ALGORITMO COM GRAFOS DE 25 VÉRTICES')
 
 # Adicionar legenda
 plt.legend()
@@ -88,13 +88,14 @@ plt.plot(lista_vertice_125[8],lista_vertice_125[9], marker='', linestyle='-', co
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
-plt.title('RESULTADO POR ALGORITMO')
+plt.title('RESULTADO POR ALGORITMO COM GRAFOS DE 125 VÉRTICES')
 
 # Adicionar legenda
 plt.legend()
 
 # Exibir o gráfico
 plt.show()
+
 
 #
 # Gera um grafico de todos os algoritmos com as arestas aumentando e vertice = 625 
@@ -109,13 +110,14 @@ plt.plot(lista_vertice_625[8],lista_vertice_625[9], marker='', linestyle='-', co
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
-plt.title('RESULTADO POR ALGORITMO')
+plt.title('RESULTADO POR ALGORITMO COM GRAFOS DE 625 VÉRTICES')
 
 # Adicionar legenda
 plt.legend()
 
 # Exibir o gráfico
 plt.show()
+
 
 #
 # Gera um grafico de todos os algoritmos com as arestas aumentando e vertice = 3125 
@@ -130,7 +132,7 @@ plt.plot(lista_vertice_3125[8],lista_vertice_3125[9], marker='', linestyle='-', 
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
-plt.title('RESULTADO POR ALGORITMO')
+plt.title('RESULTADO POR ALGORITMO COM GRAFOS DE 3125 VÉRTICES')
 
 # Adicionar legenda
 plt.legend()
@@ -151,12 +153,10 @@ print("Dicionário ordenado por valores:", dicionario_ordenado_por_valores)
 # Obter chaves e valores do dicionário
 algoritmo = list(dicionario_ordenado_por_valores.keys())
 tempo = list(dicionario_ordenado_por_valores.values())
+# Cores para cada barra
+cores = ['red', 'green', 'blue', 'purple', 'yellow']
 # Criar um gráfico de linhas
-plt.plot(algoritmo, tempo, marker='o', linestyle='-', color='r', label='Grafico Geral')
-plt.plot(algoritmo, tempo, marker='o', linestyle='-', color='r', label='')
-plt.plot(algoritmo, tempo, marker='o', linestyle='-', color='r', label='')
-plt.plot(algoritmo, tempo, marker='o', linestyle='-', color='r', label='')
-plt.plot(algoritmo, tempo, marker='o', linestyle='-', color='r', label='')
+plt.bar(algoritmo, tempo, color=cores)
 
 # Adicionar rótulos e título
 plt.xlabel('Algoritmos')
