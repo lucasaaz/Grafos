@@ -68,6 +68,7 @@ class Pair {
     }
 }
 
+// Classe principal que contém a implementação do algoritmo Jhonson
 public class AlgoritmoJohnson {
 
     // Algoritmo de Johnson
@@ -213,9 +214,6 @@ public class AlgoritmoJohnson {
             try {
                 for (int repeat = 0; repeat < 5; repeat++) { // Repetir a leitura do arquivo 5 vezes
 
-                    // Inicio - Tempo de execucao do grafo atual por vertice
-                    long startTimeGrafo = System.currentTimeMillis();
-
                     // Resetar o grafo para cada iteração
                     int numLinhas = qa[repeat];  // Número de linhas a serem lidas
                     Graph graph = lerGrafo("grafo_" + y + ".txt", numLinhas);
@@ -226,7 +224,18 @@ public class AlgoritmoJohnson {
                         parents[i] = -1;
                     }
 
+                    // Inicio - Tempo de execucao do Jhonson no grafo atual
+                    long startTimeAlgoritmo = System.currentTimeMillis();
+                    // Executa o algoritmo de Jhonson
                     int[] distances = johnson(graph, startVertex, parents);
+                    // Fim - Tempo de execucao do Jhonson no grafo atual
+                    long endTimeAlgoritmo = System.currentTimeMillis();
+                    // Calcula o tempo gasto no processamento do grafo atual
+                    long totalTimeAlgoritmo = endTimeAlgoritmo - startTimeAlgoritmo;
+                    System.out.println("Tempo gasto pelo algoritmo Jhonson no grafo_" + y + " - Arestas " + numLinhas + ": " + totalTimeAlgoritmo + " ms | " + (totalTimeAlgoritmo / 1000) + " s | " + ((totalTimeAlgoritmo / 1000) / 60) + " min");
+                    resultado.append("\nTempo gasto pelo algoritmo Jhonson no grafo_" + y + " - Arestas " + numLinhas + ": " + totalTimeAlgoritmo + " ms | " + (totalTimeAlgoritmo / 1000) + " s | " + ((totalTimeAlgoritmo / 1000) / 60) + " min");
+                    ResulTime.add(totalTimeAlgoritmo+"");
+                    ResultAresta.add(""+numLinhas);
 
                     // Exibindo as distâncias mínimas e os caminhos mínimos a partir do ponto de origem
                     resultado.append("\nGrafo ").append(y).append(" - Iteração ").append(repeat + 1).append(" - Arestas " + numLinhas);
@@ -247,13 +256,6 @@ public class AlgoritmoJohnson {
                         }
                         resultado.append("\n");
                     }
-                    //resultado.append("\n");
-                    // Fim - Tempo de execucao do grafo atual por vertice
-                    // Calcula o tempo gasto no processamento do grafo atual 
-                    long endTimeGrafo = System.currentTimeMillis();
-                    long totalTimeGrafo = endTimeGrafo - startTimeGrafo;
-                    ResulTime.add(totalTimeGrafo+"");
-                    ResultAresta.add(""+numLinhas);
                 }
             } catch (FileNotFoundException e) {
                 System.err.println("Erro ao abrir o arquivo.");
@@ -266,9 +268,8 @@ public class AlgoritmoJohnson {
             long totalTimeFile = endTimeFile - startTimeFile;
 
             // Registra o tempo gasto em cada grafo
-            resultado.append("Tempo total de execução do grafo_").append(y).append(": ").append(totalTimeFile).append(" ms | ").append((totalTimeFile / 1000)).append(" s | ").append(((totalTimeFile / 1000) / 60)).append(" min\n");
-            resultado.append("\n");
-            System.out.println("Tempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
+            resultado.append("\nTempo total de execução do Arquivo grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
+            System.out.println("Tempo total de execução do Arquivo grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
         }
 
         // Calcular o tempo gasto
@@ -276,9 +277,9 @@ public class AlgoritmoJohnson {
         long totalTime = endTime - startTime;
 
         // Registra o tempo total gasto
-        resultado.append("Tempo total de execução: ").append(totalTime).append(" ms | ").append((totalTime / 1000)).append(" s | ").append(((totalTime / 1000) / 60)).append(" min\n");
-        System.out.println("Tempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
-
+        resultado.append("\nTempo total de execução de todos os arquivos: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        System.out.println("\nTempo total de execução de todos os arquivos: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        
         // Escrever o resultado no arquivo "Johnson.txt"
         criarArquivoTexto("Johnson.txt", resultado.toString());
         List<List<String>> ResultFinal = new ArrayList<>();

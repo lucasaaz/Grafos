@@ -89,21 +89,21 @@ public class AlgoritmoFloydWarshall {
 
                 for (int repeat = 0; repeat < 5; repeat++) { // Repetir a leitura do arquivo 5 vezes
 
-                    // Inicio - Tempo de execucao do grafo atual por vertice
-                    long startTimeGrafo = System.currentTimeMillis();
-
                     // Resetar o grafo para cada iteração
                     int numLinhas = qa[repeat];  // Número de linhas a serem lidas
                     int[][] matrizAdj = lerGrafo("grafo_" + y + ".txt", numLinhas);
 
+                    // Inicio - Tempo de execucao do Floyd no grafo atual
+                    long startTimeAlgoritmo = System.currentTimeMillis();
                     // Executa o algoritmo de Floyd-Warshall
                     floydWarshall(matrizAdj, matrizAdj.length, resultado, y, repeat + 1, numLinhas);
-
-                    // Fim - Tempo de execucao do grafo atual por vertice
-                    // Calcula o tempo gasto no processamento do grafo atual 
-                    long endTimeGrafo = System.currentTimeMillis();
-                    long totalTimeGrafo = endTimeGrafo - startTimeGrafo;
-                    ResulTime.add(totalTimeGrafo+"");
+                    // Fim - Tempo de execucao do Floyd no grafo atual
+                    long endTimeAlgoritmo = System.currentTimeMillis();
+                    // Calcula o tempo gasto no processamento do grafo atual
+                    long totalTimeAlgoritmo = endTimeAlgoritmo - startTimeAlgoritmo;
+                    System.out.println("Tempo gasto pelo algoritmo Floyd-Warshall no grafo_" + y + " - Arestas " + numLinhas + ": " + totalTimeAlgoritmo + " ms | " + (totalTimeAlgoritmo / 1000) + " s | " + ((totalTimeAlgoritmo / 1000) / 60) + " min");
+                    resultado.append("\nTempo gasto pelo algoritmo Floyd-Warshall no grafo_" + y + " - Arestas " + numLinhas + ": " + totalTimeAlgoritmo + " ms | " + (totalTimeAlgoritmo / 1000) + " s | " + ((totalTimeAlgoritmo / 1000) / 60) + " min");
+                    ResulTime.add(totalTimeAlgoritmo+"");
                     ResultAresta.add(""+numLinhas);
                 }
 
@@ -113,9 +113,9 @@ public class AlgoritmoFloydWarshall {
                 long totalTimeFile = endTimeFile - startTimeFile;
 
                 // Registra o tempo gasto em cada grafo
-                resultado.append("\nTempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
-                System.out.println("\nTempo total de execução do grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
-            }
+                resultado.append("\nTempo total de execução do Arquivo grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
+                System.out.println("Tempo total de execução do Arquivo grafo_" + y + ": " + totalTimeFile + " ms | " + (totalTimeFile / 1000) + " s | " + ((totalTimeFile / 1000) / 60) + " min\n");
+        }
         } catch (FileNotFoundException e) {
             System.err.println("Erro ao abrir o arquivo.");
             e.printStackTrace();
@@ -126,9 +126,9 @@ public class AlgoritmoFloydWarshall {
         long totalTime = endTime - startTime;
 
         // Registra o tempo total gasto
-        resultado.append("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
-        System.out.println("\nTempo total de execução: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
-
+        resultado.append("\nTempo total de execução de todos os arquivos: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        System.out.println("\nTempo total de execução de todos os arquivos: " + totalTime + " ms | " + (totalTime / 1000) + " s | " + ((totalTime / 1000) / 60) + " min\n");
+        
         // Escrever o resultado no arquivo "FloydWarshall.txt"
         criarArquivoTexto("FloydWarshall.txt", resultado.toString());
         List<List<String>> ResultFinal = new ArrayList<>();
