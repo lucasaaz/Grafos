@@ -13,9 +13,7 @@ public class GeradorDeGrafos {
         for (int x = 1; x <= 5; x++) {
             int numVertices = (int) Math.pow(5, x);
             System.out.println("Grafo " + x + ":");
-            List<String> arestas = gerarArestasAleatorias(numVertices, x);
-            // Exibe as arestas geradas (opcional)
-            //exibirArestas(arestas);
+            List<String> arestas = gerarGrafoConexo(numVertices, x);
             // Salva as arestas em um arquivo separado para cada iteração
             salvarArestasEmArquivo("grafo_" + x + ".txt", arestas);
         }
@@ -23,45 +21,56 @@ public class GeradorDeGrafos {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
 
-        System.out.println("Tempo total de execução: " + totalTime + "ms | " + (totalTime/1000) + "s | " + ((totalTime/1000)/60) + " min");
-    
+        System.out.println("Tempo total de execução: " + totalTime + "ms | " + (totalTime / 1000) + "s | " + ((totalTime / 1000) / 60) + " min");
     }
 
-    private static List<String> gerarArestasAleatorias(int numVertices, int x) {
-        // Calcular quantidades equidistantes
-        int menorQuantidade = numVertices - 1;
-        int maiorQuantidade = (numVertices * (numVertices - 1)) / 2;
-        int intervalo = (maiorQuantidade - menorQuantidade) / 4;
-        int[] quantidadesEquidistantes = new int[5];
+    private static List<String> gerarGrafoConexo(int numVertices, int x) {
+        List<String> arestas = new ArrayList<>();
+        Random random = new Random();
 
-        for (int i = 0; i < 5; i++) {
-            quantidadesEquidistantes[i] = menorQuantidade + i * intervalo;
+        Set<Pair<Integer, Integer>> arestasUsadas = new HashSet<>();
+        Set<Integer> verticesUsados = new HashSet<>();
+        int origen = 3;
+
+        // Adiciona arestas aleatórias até que o grafo seja conexo
+        for (int i = 0; i < primeirasLinhas(numVertices); i++) {
+            int destino;
+            verticesUsados.add(origen);
+            do {
+                origen = random.nextInt(numVertices);
+            } while (verticesUsados.contains(origen));
+
+            if(origen<12 && origen%2==1){
+                destino = (origen + 2) % numVertices; // Conecta cada vértice ao próximo
+            }else if(origen>12 && origen%2==1){
+                destino = (origen + 1) % numVertices; // Conecta cada vértice ao próximo
+            }else if(origen<12 && origen%2==0){
+                destino = (origen + 1) % numVertices; // Conecta cada vértice ao próximo
+            }else{
+                destino = (origen + 2) % numVertices; // Conecta cada vértice ao próximo
+            }
+            // destino = (origen + 1) % numVertices; // Conecta cada vértice ao próximo
+            Pair<Integer, Integer> novaAresta = new Pair<>(Math.min(origen, destino), Math.max(origen, destino));
+            if (arestasUsadas.add(novaAresta)) {
+                int peso = random.nextInt(1, 10); // Peso aleatório de 0 a 10
+                arestas.add(origen + " " + destino + " " + peso);
+            }
         }
 
-        // Adicionar arestas aleatórias com pesos e sem repetições
-        Random random = new Random();
-        Set<Pair<Integer, Integer>> arestasAdicionadas = new HashSet<>();
-        List<String> arestas = new ArrayList<>();
-        boolean entrar = true;
+        // Adiciona a primeira linha com o número total de vértices
+        int V = (int) Math.pow(5, x);
+        arestas.add(0, String.valueOf(V));
 
-        for (int i = 0; i < 5; i++) {
-            while (arestasAdicionadas.size() < quantidadesEquidistantes[i]) {
-                int origem = random.nextInt(numVertices);
-                int destino = random.nextInt(numVertices);
+        // Adiciona arestas aleatórias adicionais após o grafo conexo
+        while (arestas.size() < linhasMaximas(numVertices)) {
+            int origem = random.nextInt(numVertices);
+            int destino = random.nextInt(numVertices);
 
-                if (origem != destino) {
-                    Pair<Integer, Integer> novaAresta = new Pair<>(Math.min(origem, destino), Math.max(origem, destino));
-                    if (arestasAdicionadas.add(novaAresta)) {
-                        int V = (int) Math.pow(5, x);
-                        if (entrar == true) {
-                            String v = String.valueOf(V);
-                            arestas.add(v);
-                            entrar = false;
-                        }
-
-                        int peso = random.nextInt(1,10); // Peso aleatório de 0 a 100
-                        arestas.add(origem + " " + destino + " " + peso);
-                    }
+            if (origem != destino) {
+                Pair<Integer, Integer> novaAresta = new Pair<>(Math.min(origem, destino), Math.max(origem, destino));
+                if (arestasUsadas.add(novaAresta)) {
+                    int peso = random.nextInt(1, 10); // Peso aleatório de 0 a 10
+                    arestas.add(origem + " " + destino + " " + peso);
                 }
             }
         }
@@ -69,10 +78,12 @@ public class GeradorDeGrafos {
         return arestas;
     }
 
-    private static void exibirArestas(List<String> arestas) {
-        for (String aresta : arestas) {
-            System.out.println(aresta);
-        }
+    private static int primeirasLinhas(int numVertices) {
+        return numVertices - 1;
+    }
+
+    private static int linhasMaximas(int numVertices) {
+        return (numVertices * (numVertices - 1)) / 2;
     }
 
     private static void salvarArestasEmArquivo(String nomeArquivo, List<String> arestas) {
