@@ -2,11 +2,11 @@
 # Trabalho Teoria Grafos
 O trabalho consiste na implementação (em Java, C, ou C++, usando somente bibliotecas padrão) e avaliação de vários métodos de cômputo de caminhos mínimos de um grafo não direcionado de pesos positivos. Mais especificamente:
 
-Algoritmo de Dijkstra;
-Algoritmo de Bellman-Ford;
-Algoritmo de Floyd-Warshall;
-Algoritmo da Floresta de Caminhos Ótimos* com a função fmax;
-Algoritmo de Johnson*;
+# Algoritmo de Dijkstra;
+# Algoritmo de Bellman-Ford;
+# Algoritmo de Floyd-Warshall;
+# Algoritmo da Floresta de Caminhos Ótimos* com a função fmax;
+# Algoritmo de Johnson*;
 onde aqueles indicados por *, se implementados e analisados, acarretarão em pontos extra à nota do aluno. Além disso, o aluno deverá entregar um relatório escrito em LaTeX com os seguintes itens:
 
 Introdução e Referencial Teórico
