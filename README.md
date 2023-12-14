@@ -1,5 +1,5 @@
 ﻿# Grafos
-# Grafos
+# Trabalho Teoria Grafos
 O trabalho consiste na implementação (em Java, C, ou C++, usando somente bibliotecas padrão) e avaliação de vários métodos de cômputo de caminhos mínimos de um grafo não direcionado de pesos positivos. Mais especificamente:
 
 Algoritmo de Dijkstra;
