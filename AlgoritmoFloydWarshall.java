@@ -83,7 +83,7 @@ public class AlgoritmoFloydWarshall {
                 // Calcula intervalos de arestas com base no número de vértices
                 for (int i = 1; i <= 3; i++) {
                     intervalo = (int) (intervalo * 1.5);
-                    qa[i] = intervalo;
+                    qa[i] = intervalo * y;
                     intervalo--;
                 }
 

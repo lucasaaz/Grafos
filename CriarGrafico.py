@@ -107,6 +107,9 @@ plt.plot(lista_vertice_625[4],lista_vertice_625[5], marker='', linestyle='-', co
 plt.plot(lista_vertice_625[6],lista_vertice_625[7], marker='', linestyle='-', color='g', label='ForestPaths')
 plt.plot(lista_vertice_625[8],lista_vertice_625[9], marker='', linestyle='-', color='c', label='Jhonson')
 
+# Definir limites do eixo y (por exemplo, de 0 a 1000)
+plt.ylim(0, 1000)
+
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
 plt.ylabel('Tempo (ms)')
@@ -128,6 +131,9 @@ plt.plot(lista_vertice_3125[2],lista_vertice_3125[3], marker='', linestyle='-', 
 plt.plot(lista_vertice_3125[4],lista_vertice_3125[5], marker='', linestyle='-', color='b', label='FloydWarshall')
 plt.plot(lista_vertice_3125[6],lista_vertice_3125[7], marker='', linestyle='-', color='g', label='ForestPaths')
 plt.plot(lista_vertice_3125[8],lista_vertice_3125[9], marker='', linestyle='-', color='c', label='Jhonson')
+
+# Definir limites do eixo y (por exemplo, de 0 a 1000)
+plt.ylim(0, 1000)
 
 # Adicionar rótulos e título
 plt.xlabel('Numero de Arestas')
@@ -157,6 +163,9 @@ tempo = list(dicionario_ordenado_por_valores.values())
 cores = ['red', 'green', 'blue', 'purple', 'yellow']
 # Criar um gráfico de linhas
 plt.bar(algoritmo, tempo, color=cores)
+
+# Definir limites do eixo y (por exemplo, de 0 a 1000)
+plt.ylim(0, 1000)
 
 # Adicionar rótulos e título
 plt.xlabel('Algoritmos')
